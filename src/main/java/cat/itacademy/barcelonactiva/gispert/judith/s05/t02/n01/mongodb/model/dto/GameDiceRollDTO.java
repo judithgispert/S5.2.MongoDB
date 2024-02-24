@@ -9,22 +9,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GameDiceRollDTO {
-    private String id;
-    private int dice1;
-    private int dice2;
-    private boolean isWin;
+    private String idDTO;
+    private int dice1DTO;
+    private int dice2DTO;
+    private boolean isWinDTO;
     private Player player;
 
     public GameDiceRollDTO(Player player){
-        this.dice1 = DiceRandomNum.randomNum();
-        this.dice2 = DiceRandomNum.randomNum();
-        this.isWin = winGame();
+        this.dice1DTO = DiceRandomNum.randomNum();
+        this.dice2DTO = DiceRandomNum.randomNum();
+        this.isWinDTO = winGame();
         this.player = player;
     }
 
     public boolean winGame(){
         boolean win;
-        if(dice1 + dice2==7){
+        if(dice1DTO + dice2DTO == 7){
             win = true;
         } else {
             win = false;
