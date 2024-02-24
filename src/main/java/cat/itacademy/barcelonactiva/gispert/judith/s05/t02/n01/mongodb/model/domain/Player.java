@@ -6,13 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "players")
 public class Player {
@@ -23,13 +25,20 @@ public class Player {
     private String name;
     @JsonProperty("registration_date")
     private LocalDateTime registrationDate;
+    @JsonProperty("games")
+    @DBRef
+    private List<GameDiceRoll> games = new ArrayList<>();
 
-    @JsonProperty("games won")
+    @JsonProperty("games_won")
     private int gamesWon;
     @JsonProperty("% won")
     private double percentageWon;
-    @JsonProperty("games lost")
+    @JsonProperty("games_lost")
     private int gamesLost;
     @JsonProperty("% lost")
     private double percentageLost;
+
+    public Player (){
+        this.registrationDate = LocalDateTime.now();
+    }
 }
