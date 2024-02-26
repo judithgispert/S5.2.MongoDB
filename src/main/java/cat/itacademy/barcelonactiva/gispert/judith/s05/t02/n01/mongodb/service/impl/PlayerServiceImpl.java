@@ -3,6 +3,7 @@ package cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.service.
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.exceptions.GameDiceRollNotFoundException;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.exceptions.PlayerNotFoundException;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.exceptions.RepeatedValueException;
+import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.GameDiceRoll;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.Player;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.GameDiceRollDTO;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.PlayerDTO;
@@ -110,11 +111,11 @@ public class PlayerServiceImpl implements PlayerService {
 
 
     @Override
-    public List<GameDiceRollDTO> getGames(String id) {
+    public List<GameDiceRoll> getGames(String id) {
         Optional<Player> playerSearch = playerRepository.findById(id);
         if(playerSearch.isPresent()){
             Player player = playerSearch.get();
-            return gameDiceRollService.getPlayerGames(player);
+            return player.getGames();
         } else {
             throw new PlayerNotFoundException("The id: " + id + ", doesn't correspond to any player.");
         }

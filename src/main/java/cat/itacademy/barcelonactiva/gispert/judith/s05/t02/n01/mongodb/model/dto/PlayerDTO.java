@@ -24,4 +24,10 @@ public class PlayerDTO {
     private double percentageWonDTO;
     private int gamesLostDTO;
     private double percentageLostDTO;
+
+    public PlayerDTO(String nameDTO) {
+        this.registrationDateDTO = LocalDateTime.now();
+        this.nameDTO = nameDTO;
+        gamesDTO = new ArrayList<>();
+    }
 }

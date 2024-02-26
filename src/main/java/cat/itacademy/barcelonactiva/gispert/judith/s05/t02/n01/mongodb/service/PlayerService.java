@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.service;
 
+import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.GameDiceRoll;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.Player;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.GameDiceRollDTO;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.PlayerDTO;
@@ -14,7 +15,7 @@ public interface PlayerService {
 
     GameDiceRollDTO play (String id);
     void updateResultGame(GameDiceRollDTO gameDiceRollDTO, PlayerDTO playerDTO);
-    List<GameDiceRollDTO> getGames(String id);
+    List<GameDiceRoll> getGames(String id);
     void deleteGames(String id);
     PlayerDTO restartPercentage(PlayerDTO playerDTO);
     List<PlayerDTO> getRanking();

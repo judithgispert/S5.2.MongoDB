@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.controller;
 
+import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.GameDiceRoll;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.Player;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.GameDiceRollDTO;
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto.PlayerDTO;
@@ -58,12 +59,12 @@ public class GameController {
     }
 
     @GetMapping("/getGames/{id}")
-    public ResponseEntity<List<GameDiceRollDTO>> getGames(@PathVariable("id") String id){
-        List<GameDiceRollDTO> gamesDTO = playerService.getGames(id);
-        if(gamesDTO.isEmpty()){
+    public ResponseEntity<List<GameDiceRoll>> getGames(@PathVariable("id") String id){
+        List<GameDiceRoll> games = playerService.getGames(id);
+        if(games.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(gamesDTO, HttpStatus.OK);
+            return new ResponseEntity<>(games, HttpStatus.OK);
         }
     }
 

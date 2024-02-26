@@ -14,20 +14,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GameDiceRollImpl implements GameDiceRollService{
+public class GameDiceRollServiceImpl implements GameDiceRollService{
     @Autowired
     private GameDiceRollRepository gameDiceRollRepository;
 
     @Override
     public GameDiceRollDTO createGame(Player player) {
-        return new GameDiceRollDTO(player);
+        GameDiceRoll gameDiceRoll = new GameDiceRoll(player);
+        return gameDiceRollToDTO(gameDiceRoll, player);
     }
 
     @Override
     public GameDiceRollDTO addGame(Player player) {
         GameDiceRollDTO gameDiceRollDTO = createGame(player);
-        gameDiceRollRepository.save(gameDTOToDiceRoll(gameDiceRollDTO, player));
-        return gameDiceRollDTO;
+        GameDiceRoll gameDiceRoll = gameDTOToDiceRoll(gameDiceRollDTO, player);
+        gameDiceRollRepository.save(gameDiceRoll);
+        player.getGames().add(gameDiceRoll);
+        return gameDiceRollToDTO(gameDiceRoll, player);
     }
 
     @Override
@@ -41,7 +44,9 @@ public class GameDiceRollImpl implements GameDiceRollService{
     @Override
     public void deleteGames(Player player) {
         List<GameDiceRoll> games = gameDiceRollRepository.findByPlayer(player);
-        games.forEach(l -> gameDiceRollRepository.delete(l));
+        if(games!=null){
+            games.forEach(l -> gameDiceRollRepository.delete(l));
+        }
     }
 
     private static GameDiceRoll gameDTOToDiceRoll(GameDiceRollDTO gameDiceRollDTO, Player player){
