@@ -6,7 +6,7 @@ import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto
 import java.util.List;
 
 public interface GameDiceRollService {
-    GameDiceRollDTO createGame(Player player);
+    GameDiceRollDTO createGame();
     GameDiceRollDTO addGame(Player player);
     List<GameDiceRollDTO> getPlayerGames(Player player);
     void deleteGames(Player player);

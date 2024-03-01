@@ -8,8 +8,8 @@ import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto
 import java.util.List;
 
 public interface PlayerService {
-    PlayerDTO createPlayer();
-    void addPlayer();
+    PlayerDTO createPlayer(PlayerDTO playerDTO);
+    void addPlayer(PlayerDTO playerDTO);
     List<Player> getPlayers();
     PlayerDTO updatePlayer(PlayerDTO newPlayerDTO, String id);
 

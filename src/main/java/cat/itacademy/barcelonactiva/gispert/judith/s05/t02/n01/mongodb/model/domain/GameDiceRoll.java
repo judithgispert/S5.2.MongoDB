@@ -1,6 +1,6 @@
 package cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.methods.DiceRandomNum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +20,11 @@ public class GameDiceRoll {
     private int dice2;
     @JsonProperty("isWin")
     private boolean isWin;
-    @JsonIgnoreProperties({"games"})
-    private Player player;
 
-    public GameDiceRoll(Player player){
-        this.player = player;
+    public GameDiceRoll(){
+        this.dice1 = DiceRandomNum.randomNum();
+        this.dice2 = DiceRandomNum.randomNum();
     }
+
+
 }

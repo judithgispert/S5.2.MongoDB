@@ -21,8 +21,8 @@ public class GameController {
     private PlayerService playerService;
 
     @PostMapping("/createPlayer")
-    public ResponseEntity<String> createPlayer(){
-        playerService.addPlayer();
+    public ResponseEntity<String> createPlayer(@RequestBody PlayerDTO playerDTO){
+        playerService.addPlayer(playerDTO);
         return new ResponseEntity<>("Player created successfully.", HttpStatus.CREATED);
     }
 

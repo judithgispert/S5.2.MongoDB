@@ -28,21 +28,20 @@ public class PlayerServiceImpl implements PlayerService {
     private GameDiceRollService gameDiceRollService;
 
     @Override
-    public PlayerDTO createPlayer() {
-        return new PlayerDTO();
+    public PlayerDTO createPlayer(PlayerDTO playerDTO) {
+        return new PlayerDTO(playerDTO.getNameDTO());
     }
 
+
     @Override
-    public void addPlayer() {
-        PlayerDTO playerDTO = createPlayer();
+    public void addPlayer(PlayerDTO playerDTO) {
+        Player player = playerDTOToPlayer(createPlayer(playerDTO));
         if(playerDTO.getNameDTO() == null ||
                 playerDTO.getNameDTO().isBlank()||
                 playerDTO.getNameDTO().isEmpty()){
             playerDTO.setNameDTO("ANONYMOUS");
-            Player player = playerDTOToPlayer(playerDTO);
             playerRepository.save(player);
         } else {
-            Player player = playerDTOToPlayer(playerDTO);
             Optional<Player> playerName = playerRepository.findByName(player.getName());
             if(playerName.isPresent()){
                 throw new RepeatedValueException("This name already exist.");
@@ -98,12 +97,14 @@ public class PlayerServiceImpl implements PlayerService {
     public void updateResultGame(GameDiceRollDTO gameDiceRollDTO, PlayerDTO playerDTO) {
         if(gameDiceRollDTO.winGame()){
             playerDTO.setGamesWonDTO(playerDTO.getGamesWonDTO()+1);
-            double resultPercentageWon = ((double) playerDTO.getGamesWonDTO() / playerDTO.getGamesDTO().size())*100;
+            double resultPercentageWon = ((double) playerDTO.getGamesWonDTO() /
+                    (playerDTO.getGamesWonDTO() + playerDTO.getGamesLostDTO()))*100;
             playerDTO.setPercentageWonDTO(resultPercentageWon);
             playerRepository.save(playerDTOToPlayer(playerDTO));
         } else {
             playerDTO.setGamesLostDTO(playerDTO.getGamesLostDTO()+1);
-            double resultPercentageLost = (100 - playerDTO.getPercentageWonDTO());
+            double resultPercentageLost = ((double) playerDTO.getGamesLostDTO() /
+                    (playerDTO.getGamesWonDTO() + playerDTO.getGamesLostDTO()))*100;
             playerDTO.setPercentageLostDTO(resultPercentageLost);
             playerRepository.save(playerDTOToPlayer(playerDTO));
         }
@@ -148,7 +149,7 @@ public class PlayerServiceImpl implements PlayerService {
         List<Player> players = playerRepository.findAll();
         List<PlayerDTO> playersRanking = new ArrayList<>();
         players.stream().toList().forEach(l -> playersRanking.add(playerToPlayerDTO(l)));
-        playersRanking.sort(Comparator.comparing(PlayerDTO::getPercentageWonDTO));
+        playersRanking.sort(Comparator.comparing(PlayerDTO::getPercentageWonDTO).reversed());
         if(playersRanking.isEmpty()){
             throw new GameDiceRollNotFoundException("No games played.");
         }

@@ -1,7 +1,6 @@
 package cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.dto;
 
 import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.methods.DiceRandomNum;
-import cat.itacademy.barcelonactiva.gispert.judith.s05.t02.n01.mongodb.model.domain.Player;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,13 +12,11 @@ public class GameDiceRollDTO {
     private int dice1DTO;
     private int dice2DTO;
     private boolean isWinDTO;
-    private Player player;
 
-    public GameDiceRollDTO(Player player){
+    public GameDiceRollDTO(){
         this.dice1DTO = DiceRandomNum.randomNum();
         this.dice2DTO = DiceRandomNum.randomNum();
         this.isWinDTO = winGame();
-        this.player = player;
     }
 
     public boolean winGame(){
